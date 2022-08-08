@@ -4,9 +4,10 @@
 
 import itertools
 import collections
+from typing import Set
 
 
-data = list(itertools.product(*[(0, 1, 2), (0, 1), (0, 1)]))
+data = list(itertools.product(*[(0, 1, 2), (0, 1), (0, 1), (0, 1), (0, 1), (0, 1)]))
 combinations = [tuple(itertools.combinations(c, 2)) for c in data]
 
 pairs_repeat = []
@@ -20,8 +21,8 @@ for row in list(map(tuple, zip(*combinations))):
 
 
 not_visited = list(range(len(combinations)))
-visited = set()
-result = set()
+visited: Set[int] = set()
+result: Set[int] = set()
 
 
 while len(visited) + len(result) < len(not_visited):
@@ -61,14 +62,27 @@ while len(visited) + len(result) < len(not_visited):
             d[k] = v - redurant
 
             if len(d[k]) == 1:
-                redurant_.add(list(d[k]).pop())
+                redurant_.add(d[k].pop())
 
         for k in list(d):
             if len(d[k]) == 0:
                 del d[k]
 
-    #ste
+    # # step 3
+    # for elem in redurant_:
+    #     result.add(elem)
+
+    # for _ind in redurant_:
+    #     _indexes = list(filter(lambda x: x not in (list(visited) + list(result)), not_visited))
+    #     for i in _indexes:
+    #         for j in range(len(combinations[i])):
+    #             if combinations[i][j] == combinations[_ind][j]:
+    #                 visited.add(i)
+
+        
+    # nv_indexes = list(filter(lambda x: x not in (list(visited) + list(result)), not_visited))
 
 
 
-print(*[data[i] for i in result], sep='\n')
+
+print(*[data[i] for i in sorted(list(result))], sep='\n')
